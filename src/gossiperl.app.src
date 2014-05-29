@@ -1,0 +1,12 @@
+{application, gossiperl,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { gossiperl_app, []}},
+  {env, []}
+ ]}.
