@@ -1,8 +1,8 @@
 # config valid only for Capistrano 3.1
 lock '3.2.1'
 
-set :application, 'gossiping'
-set :repo_url, 'git@example.com:me/my_repo.git'
+set :application, 'gossiperl'
+set :repo_url, 'git@github.com:krakatoa/gossiperl.git'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call

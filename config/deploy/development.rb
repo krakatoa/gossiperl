@@ -27,7 +27,7 @@ server '192.168.33.10', user: 'vagrant', roles: %w{web app}, my_property: :my_va
 # --------------
 set :ssh_options, {
   password: 'vagrant',
-  forward_agent: false,
+  forward_agent: true,
   auth_methods: %w(password)
 }
 #
