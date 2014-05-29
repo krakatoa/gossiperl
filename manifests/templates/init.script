@@ -10,8 +10,9 @@
 ### END INIT INFO
 
 DESC="{{package_shortdesc}}"
-NAME=ntpd_probe
-DAEMON=/home/krakatoa/workspace/netapod-probes/rel/ntpd_probe/bin/ntpd_probe
+NAME=gossiperl
+APP_PATH=/var/www/gossiperl/current
+DAEMON=$APP_PATH/rel/gossiperl/bin/gossiperl
 SCRIPTNAME=/etc/init.d/$NAME
 
 # Read configuration variable file if it is present
@@ -33,8 +34,8 @@ do_start()
 
     # Startup with the appropriate user
     start-stop-daemon --start \
-        --name ntpd_probe \
-        --user krakatoa \
+        --name gossiperl \
+        --user vagrant \
         --exec $DAEMON -- start \
         || return 2
 }
@@ -45,8 +46,7 @@ do_start()
 do_stop()
 {
     # Identify the erts directory
-    # ERTS_PATH=`$DAEMON ertspath`
-    ERTS_PATH=/home/krakatoa/workspace/netapod-backend/probes/http/rel/ntpd_probe/erts-6.0/bin
+    ERTS_PATH=$APP_PATH/rel/gossiperl/erts-5.9.1/bin
 
     # Attempt a clean shutdown.
     $DAEMON stop
@@ -60,7 +60,7 @@ do_stop()
     start-stop-daemon --stop \
                       --quiet \
                       --retry=TERM/30/KILL/5 \
-                      --user krakatoa \
+                      --user vagrant \
                       --exec $ERTS_PATH/run_erl
     return $?
 }

@@ -45,3 +45,14 @@ class rebar($base_path = "/tmp/rebar") {
 }
 
 include rebar
+
+file { "gossiperl service":
+  path => "/etc/init.d/gossiperl",
+  content => template("init.script"),
+  mode => "0755"
+}
+
+file { "gossiperl defaults":
+  path => "/etc/default/gossiperl",
+  content => template("default"),
+}
