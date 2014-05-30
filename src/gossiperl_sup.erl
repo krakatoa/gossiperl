@@ -23,5 +23,8 @@ start_link() ->
 %% ===================================================================
 
 init([]) ->
-    {ok, { {one_for_one, 5, 10}, []} }.
+  Monitor = ?CHILD(monitor, worker),
+  Agent = ?CHILD(agent, worker),
+  Gossip = ?CHILD(gossip, worker),
+  {ok, { {one_for_one, 5, 10}, [Monitor, Agent, Gossip]} }.
 
