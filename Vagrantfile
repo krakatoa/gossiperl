@@ -10,19 +10,24 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   config.vm.box = "debian-73-x64"
-  config.ssh.forward_agent = true
-  config.vm.synced_folder "manifests/templates", "/tmp/vagrant-puppet-1/templates"
 
-  config.vm.provision :shell do |shell|
-    shell.path = "manifests/bootstrap.sh"
-  end
+  ###
+  # Capistrano is the prefered way to develop on this project (by running the manifests/development_bootstrap.sh)
+  #
+  # config.ssh.forward_agent = true
+  # config.vm.synced_folder "manifests/templates", "/tmp/vagrant-puppet-1/templates"
 
-  config.vm.provision :puppet do |puppet|
-    puppet.manifests_path = "manifests"
-    puppet.manifest_file = "gossip.pp"
-    puppet.options = ["--verbose", "--debug", "--templatedir", "/tmp/vagrant-puppet-1/templates"]
-    puppet.facter = {}
-  end
+  # config.vm.provision :shell do |shell|
+  #   shell.path = "manifests/bootstrap.sh"
+  # end
+
+  # config.vm.provision :puppet do |puppet|
+  #   puppet.manifests_path = "manifests"
+  #   puppet.manifest_file = "gossip.pp"
+  #   puppet.options = ["--verbose", "--debug", "--templatedir", "/tmp/vagrant-puppet-1/templates"]
+  #   puppet.facter = {}
+  # end
+  ###
 
   config.vm.define "g1" do |g1|
     g1.vm.provider :virtualbox do |v|

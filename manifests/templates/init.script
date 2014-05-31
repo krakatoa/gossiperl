@@ -35,7 +35,7 @@ do_start()
     # Startup with the appropriate user
     start-stop-daemon --start \
         --name gossiperl \
-        --user vagrant \
+        --user deploy \
         --exec $DAEMON -- start \
         || return 2
 }
@@ -60,7 +60,7 @@ do_stop()
     start-stop-daemon --stop \
                       --quiet \
                       --retry=TERM/30/KILL/5 \
-                      --user vagrant \
+                      --user deploy \
                       --exec $ERTS_PATH/run_erl
     return $?
 }
@@ -105,6 +105,9 @@ case "$1" in
         # See if the VM is alive
         $DAEMON ping || exit $?
         ;;
+    console)
+        $DAEMON attach || exit $?
+        ;;
     reload|force-reload)
         log_daemon_msg "Reloading $DESC" "$NAME"
         do_reload
@@ -134,7 +137,7 @@ case "$1" in
         do_status && exit 0 || exit $?
         ;;
     *)
-        echo "Usage: $SCRIPTNAME {start|stop|ping|restart|force-reload|status}" >&2
+        echo "Usage: $SCRIPTNAME {start|stop|ping|console|restart|force-reload|status}" >&2
         exit 3
         ;;
 esac

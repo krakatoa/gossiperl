@@ -4,9 +4,12 @@
 # is considered to be the first unless any hosts have the primary
 # property set.  Don't declare `role :all`, it's a meta role.
 
-role :app, %w{vagrant@192.168.33.10}
-role :web, %w{vagrant@192.168.33.10}
-role :db,  %w{vagrant@192.168.33.10}
+role :app, %w{deploy@192.168.33.10}
+role :app, %w{deploy@192.168.33.11}
+role :app, %w{deploy@192.168.33.12}
+
+# role :web, %w{deploy@192.168.33.10}
+# role :db,  %w{deploy@192.168.33.10}
 
 
 # Extended Server Syntax
@@ -15,7 +18,9 @@ role :db,  %w{vagrant@192.168.33.10}
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server '192.168.33.10', user: 'vagrant', roles: %w{web app}, my_property: :my_value
+server '192.168.33.10', user: 'deploy', roles: %w{app}, my_property: :my_value
+server '192.168.33.11', user: 'deploy', roles: %w{app}, my_property: :my_value
+server '192.168.33.12', user: 'deploy', roles: %w{app}, my_property: :my_value
 
 
 # Custom SSH Options
@@ -26,9 +31,13 @@ server '192.168.33.10', user: 'vagrant', roles: %w{web app}, my_property: :my_va
 # Global options
 # --------------
 set :ssh_options, {
-  password: 'vagrant',
+  keys: %w(/home/krakatoa/.ssh/id-rsa),
   forward_agent: true,
-  auth_methods: %w(password)
+  auth_methods: %w(publickey)
+
+  # password: 'vagrant',
+  # forward_agent: true,
+  # auth_methods: %w(password)
 }
 #
 # And/or per server (overrides global)

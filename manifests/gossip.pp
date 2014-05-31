@@ -1,4 +1,4 @@
-$packages = ["erlang-base", "erlang-reltool"]
+$packages = ["erlang-base", "erlang-reltool", "make"]
 package { $packages:
   ensure => latest
 }
@@ -6,8 +6,8 @@ package { $packages:
 file { "/var/www/":
   ensure => "directory",
   recurse => true,
-  owner => "vagrant",
-  group => "vagrant"
+  owner => "deploy",
+  group => "deploy"
 }
 
 class rebar($base_path = "/tmp/rebar") {
@@ -31,7 +31,7 @@ class rebar($base_path = "/tmp/rebar") {
     command => "make",
     environment => ['HOME=/root'],
     path => ["/usr/bin", "/bin"],
-    require => Exec["rebar fetch"],
+    require => [ Package["erlang-base"], Package["erlang-reltool"], Package["make"], Exec["rebar fetch"] ],
     creates => "${base_path}/rebar",
     # refreshonly => true
   }
